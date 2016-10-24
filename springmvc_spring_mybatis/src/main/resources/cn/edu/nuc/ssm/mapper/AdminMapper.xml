@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nuc.ssm.dao.AdminMapper">
+	<resultMap id="BaseResultMap" type="cn.edu.nuc.ssm.entity.Admin">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<id column="username" jdbcType="VARCHAR" property="username" />
+		<id column="password" jdbcType="VARCHAR" property="password" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,username,password
+	</sql>
+	<select id="login" parameterType="cn.edu.nuc.ssm.entity.Admin"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where username=#{username} and password=#{password}
+	</select>
+	<select id="findAll" resultType="cn.edu.nuc.ssm.entity.Item">
+		select
+		*
+		from item
+	</select>
+	<!-- 增加商品 -->
+	<insert id="addItem" parameterType="cn.edu.nuc.ssm.entity.Item">
+		insert into item (xww_name,xww_price,xww_kucun) values
+		(#{xwwName},#{xwwPrice},#{xwwKucun})
+	</insert>
+	<!-- 删除商品 -->
+	<delete id="deleteItem" parameterType="java.lang.Integer">
+		delete from item where id=#{id}
+	</delete>
+	<!-- update语句 -->
+	<update id="edit" parameterType="Item">
+		update item set 
+		xww_name=#{xwwName},xww_price=#{xwwPrice},xww_kucun=#{xwwKucun}
+		where id=#{id}
+	</update>
+
+</mapper>
