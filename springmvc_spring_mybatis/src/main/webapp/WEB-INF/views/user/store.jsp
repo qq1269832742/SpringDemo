@@ -29,7 +29,7 @@
 		<h3>
 				这是一个商城界面
 			</h3>			
-		<form class="form-search" action="post" action="<%=basePath%>item_find">
+		<form class="form-search"  action="<%=basePath%>item_find" method="post">
 				<input class="input-medium search-query" type="text" name="text" value="${text}" />
 				 <button type="submit" class="btn">查找</button>
 			</form>
