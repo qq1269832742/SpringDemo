@@ -1,0 +1,226 @@
+a {
+	text-decoration: none;
+}
+.wrapper {
+	height: 1500px;
+	background: url('../image/body_bg.jpg') no-repeat 0 0 #0E3C6D;
+}
+.content-center {
+	width: 1000px;
+	margin: 0px auto;
+	padding: 10px 0 10px 0;
+	background-color: rgba(8, 23, 44, 0.25);
+	position: relative;
+}
+.menu {
+	position: fixed;
+    top: 60px;
+    transform: translateZ(0px);
+    transition: margin-top 0.3s ease 0s;
+    width: 145px;
+    will-change: margin-top, top;
+    z-index: 10;
+}
+.menu ul.hot {
+	border:1px solid rgba(255, 255, 255, 0.1);
+	border-left:none;
+	border-right: none;
+	padding: 10px 0;
+	position: relative;
+	margin: 10px 0;
+}
+.menu ul.hot li.cog {
+	position: absolute;
+	right: 12px;
+	bottom: -23px;
+	color: #fff;
+	padding: 2px;
+	cursor: pointer;
+}
+.menu ul li {
+	line-height: 40px;
+	padding-left: 20px;
+	position: relative;
+}
+.menu ul li:hover {
+	background: rgba(14,51,97, 0.9);
+}
+.menu ul li em {
+	position: absolute;
+	right: 15px;
+	top: 17px;
+	width: 0;
+	height: 0;
+	display: inline-block;
+	border:3px solid #FA7D3C;
+	border-radius: 50%;
+}
+.menu ul li a {
+	color: #fff;
+	font-size: 14px;
+}
+.m-list {
+	width: 600px;
+	float: left;
+	padding: 0 5px;
+}
+.m-list .page-info a{
+	display: inline-block;
+	height: 25px;
+	min-width:50px;
+	line-height:25px;
+	text-align:center;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	color: #000;
+	background: #fff;
+	margin: 0px 10px;
+}
+.nav {
+	width: 300px;
+	float: left;
+	padding: 0 5px;
+}
+.m-list .send {
+	height: 161px;
+	width: 600px;
+	border-radius: 3px;
+	position: relative;
+	background: url('../image/canvas.png') no-repeat 0 0;
+}
+.m-list .send .content {
+	margin: 39px 0px 0px 12px;
+	width: 571px;
+	height: 74px;
+	background: #0C2343;
+	border:none;
+}
+.m-list .send input.btn {
+	position: absolute;
+	border:none;
+	height: 30px;
+	width: 82px;
+	top:123px;
+	left: 508px;
+	border-radius: 2px;
+	cursor: pointer;
+	background: url('../image/canvas.png') no-repeat -508px -123px;
+}
+.weibo {
+	margin-top: 10px;
+	position: relative;
+	background: #071A37;
+	border-radius: 3px;
+	width: 600px;
+}
+.weibo .weibo-content {
+	padding:10px 0 0 80px;
+	color: #b0bdd0;
+}
+.weibo .weibo-content a:hover {
+	color: #257cde;
+	cursor: pointer;
+}
+.weibo .weibo-content h3 {
+	font-weight: bold;
+	padding: 0 0 10px 0;
+}
+.weibo .weibo-content p {
+	padding: 10px 0;
+}
+.weibo .weibo-content span {
+	font-size: 13px;
+	color: #38547b;
+}
+.weibo .weibo-content .header{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+.weibo>ul {
+	border-top: 1px solid #122642;
+	padding: 10px 0;
+}
+.weibo > ul > li {
+	float: left;
+	width: 140px;
+	text-align: center;
+	border-right: 1px solid #122642;
+}
+.weibo > ul > li.last {
+	border:none;
+}
+.weibo > ul > li> a {
+	text-decoration: none;
+	color: #b0bdd0;
+	font-size: 13px;
+}
+.weibo > ul > li> a span {
+	padding: 0 5px;
+}
+.weibo > ul > li> .liked {
+	color:red;
+}
+.nav {
+	width: 230px;
+}
+
+.nav .myinfo {
+	width: 230px;
+	height: 161px;
+	background: #071A37;
+}
+.nav .myinfo .person-info {
+	height: 75px;
+	position: relative;
+
+	background: url('../image/006_s.jpg') no-repeat 0 0;
+}
+.nav .myinfo .person-info img {
+	position: absolute;
+	left: 83px;
+	top:32px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+.nav .myinfo .innerwrap {
+	padding: 20px 0 0 10px;
+	text-align: center;
+	color: #b0bdd0;
+}
+.nav .myinfo .innerwrap ul {
+	padding: 10px 0;
+}
+.nav .myinfo .innerwrap ul li {
+	float: left;
+	width: 30%;
+	text-align: center;
+	border-right: 1px solid #162e4f;
+}
+.nav .myinfo .innerwrap ul li.last {
+	border:none;
+}
+
+.nav .myinfo .innerwrap ul li a {
+	text-decoration: none;
+	color: #b0bdd0;
+}
+.nav .myinfo .innerwrap ul li a strong,
+.nav .myinfo .innerwrap ul li a span{
+	display: block;
+}
+.nav .myinfo .innerwrap ul li a strong {
+	font-weight: bold;
+	font-size: 18px;
+}
+.nav .myinfo .innerwrap ul li a span {
+	font-size: 12px;
+	color: #38547b;
+}
+.nav .myinfo .innerwrap ul li a:hover strong{
+	color: #257cde;
+}
