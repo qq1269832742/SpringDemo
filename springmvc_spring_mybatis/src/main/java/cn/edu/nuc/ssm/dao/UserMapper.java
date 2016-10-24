@@ -16,4 +16,7 @@ public interface UserMapper {
 
 	List<Cart> findCart(Integer id);
 
+
+	List<Cart> itemFind(String text);
+
 }

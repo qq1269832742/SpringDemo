@@ -22,14 +22,16 @@
 </head>
 <body>
 <!-- 不能通过对象.属性提交,这是个问题 -->
+	
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">	
+		
 	<div class="page-header">
 				<h1>
 					购买 <small>商品</small>
 				</h1>
-				<h3>${msg}</h3>
+				<h3 style="color:red">${error}</h3>
 			</div>
 <form class="form-horizontal" method="post" action="<%=basePath%>user_shop">
 				<input type="hidden" name="id" value="${item.id}">
@@ -54,6 +56,7 @@
 						<input type="number"  min="0" max="${item.xwwKucun}" name="nums" />
 					</div>
 				</div>
+				<input type="hidden" name="xwwKucun" value="${item.xwwKucun}">
 				<div class="control-group">
 					<div class="controls">
 					 <button type="submit" class="btn">确定</button>

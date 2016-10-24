@@ -47,5 +47,16 @@ public class UserServiceImpl implements UserService{
 		
 		return list;
 	}
+	/**
+	 * 查询搜索商品
+	 */
+	@Override
+	public List<Cart> itemFind(String text) {
+		
+		List<Cart> list =  userMapper.itemFind(text);
+		
+		return list;
+	}
+
 	
 }

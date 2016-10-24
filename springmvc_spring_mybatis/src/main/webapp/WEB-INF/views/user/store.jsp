@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +29,10 @@
 		<h3>
 				这是一个商城界面
 			</h3>			
-		
+		<form class="form-search" action="post" action="<%=basePath%>item_find">
+				<input class="input-medium search-query" type="text" name="text" value="${text}" />
+				 <button type="submit" class="btn">查找</button>
+			</form>
 			<table class="table">
 				<thead>
 					<tr>
@@ -58,9 +67,7 @@
 						</td> 
 						<td>
 							${item.xwwKucun}
-						</td>
-						
-						
+						</td>												
 						<td>
 							<a href="to_shop?id=${item.id}&xwwName=${item.xwwName}&xwwPrice=${item.xwwPrice}&xwwKucun=${item.xwwKucun}">确定加入</a>
 						</td>

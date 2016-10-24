@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.edu.nuc.ssm.entity.Cart;
 import cn.edu.nuc.ssm.entity.Item;
@@ -75,17 +76,27 @@ public class UserController {
 	@RequestMapping(value="/user_shop")
 	public String shop( Item item,Cart cart,Model model,HttpSession session){
 		User u = (User) session.getAttribute("user");
+		System.out.println("库存"+item.getXwwKucun());
+		System.out.println("购买数量"+cart.getNums());
 		String msg;
 		cart.setUid(u.getId());
 		cart.setMid(item.getId());
-		if(cart.getNums()>0 || cart.getNums() <item.getXwwKucun()){
-		userService.shop(cart);
+		if(cart.getNums()>0 && cart.getNums() <= item.getXwwKucun()){
+			userService.shop(cart);
+			return "forward:find_cart";	
 		}else{
 			msg="添加购物车失败，需要符合规范";
+			model.addAttribute("error", msg);
 			return "forward:WEB-INF/views/user/edit.jsp";
 		}
-		return "forward:find_cart";	
+		
 	}
+	/**
+	 * 查询购物车
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/find_cart")
 	public String findCart( HttpSession session,Model model){
 		User u = (User) session.getAttribute("user");
@@ -94,7 +105,18 @@ public class UserController {
 		System.out.println(list);
 		return "user/cart";	
 	}
-	
+	/**
+	 * 查询商品
+	 * @return
+	 */
+	@RequestMapping(value="/item_find",method={RequestMethod.POST,RequestMethod.GET})
+	public String itemFind(@RequestParam(name="text",defaultValue="") String text,Model model){
+		System.out.println("搜索名称"+text);
+		List<Cart> list = userService.itemFind(text);
+		model.addAttribute("list", list);		
+		return "user/store";
+		
+	}
 	
 	
 }
