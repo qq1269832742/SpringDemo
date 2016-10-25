@@ -68,8 +68,15 @@
 						<td>
 							${item.xwwKucun}
 						</td>												
-						<td>
-							<a href="to_shop?id=${item.id}&xwwName=${item.xwwName}&xwwPrice=${item.xwwPrice}&xwwKucun=${item.xwwKucun}">确定加入</a>
+						<td>						
+							<c:choose>
+								<c:when test="${item.xwwKucun gt 0}">
+								<a href="to_shop?id=${item.id}&xwwName=${item.xwwName}&xwwPrice=${item.xwwPrice}&xwwKucun=${item.xwwKucun}">确定加入</a>
+								</c:when>
+								<c:when test="${item.xwwKucun == 0}">
+									<b style="color:blue">已售完</b>
+								</c:when>
+							</c:choose>
 						</td>
 					</tr>
 				</c:forEach>												

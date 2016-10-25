@@ -22,6 +22,7 @@ public class Item {
 	 * 商品库存
 	 */
 	private Integer xwwKucun;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -34,7 +35,7 @@ public class Item {
 	public void setXwwName(String xwwName) {
 		this.xwwName = xwwName;
 	}
-	
+
 	
 	public Double getXwwPrice() {
 		return xwwPrice;

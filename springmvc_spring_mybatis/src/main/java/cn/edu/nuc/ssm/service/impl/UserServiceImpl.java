@@ -57,6 +57,26 @@ public class UserServiceImpl implements UserService{
 		
 		return list;
 	}
+	/**
+	 * 购物车中有名称和价格相同的商品
+	 */
+	@Override
+	public void updateNum(Item item) {
+		
+		userMapper.updateNum(item);
+		
+	}
+	/**
+	 *  查询购物车中有名称和价格相同的商品
+	 */
+	
+	
+	@Override
+	public Cart findCartEqual(Cart cart) {
+		// TODO Auto-generated method stub
+		Cart c = userMapper.findCartEqual(cart);
+		return c;
+	}
 
 	
 }

@@ -30,7 +30,24 @@
 		*
 		from item
 	</select>
-	<!-- 加入购物车,试试使用存储过程 -->
+	<!-- 查询购物车中是否有相同商品-->
+	<select id="findItemEqual" parameterType="cn.edu.nuc.ssm.entity.Cart">
+		SELECT 
+	    DISTINCT 
+		m.xww_name,
+		m.xww_price,
+		c.nums 
+		FROM xww_cart c,
+		item m ,
+		xww_user u
+	    WHERE c.uid=#{id}
+	    AND c.mid=m.id and m.xww_name=#{xwwName} and m.xww_price=#{xwwPrice};
+	</select>
+	<!-- 有相同商品,修改数量 -->
+	<insert id="updateNum" parameterType="cn.edu.nuc.ssm.entity.Cart" >
+		
+	</insert>
+	<!-- 加入购物车,试试使用存储过程 ,应该行不通-->
 	<insert id="shop" parameterType="cn.edu.nuc.ssm.entity.Cart" flushCache="true" timeout="30000"  >
 		
 		insert into xww_cart(uid,mid,nums) VALUES(#{uid},#{mid},#{nums})	

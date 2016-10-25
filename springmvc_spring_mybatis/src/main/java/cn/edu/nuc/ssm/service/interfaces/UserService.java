@@ -23,6 +23,12 @@ public interface UserService {
 
 	List<Cart> itemFind(String text);
 
+
+	void updateNum(Item item);
+	
+
+	Cart findCartEqual(Cart cart);
+
 	
 	
 }

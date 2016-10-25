@@ -22,6 +22,14 @@
 		*
 		from item
 	</select>
+	<!--先查询购物车中是否有这个商品,如果有，进行下一步 -->
+	<select id="findEqual" parameterType="cn.edu.nuc.ssm.entity.Item" resultType="cn.edu.nuc.ssm.entity.Item">
+		 select * from item where xww_name=#{xwwName} and xww_price=#{xwwPrice}	
+	</select>
+	
+	<update id="updateNum" parameterType="cn.edu.nuc.ssm.entity.Item">
+		  update item set xww_kucun=xww_kucun+#{xwwKucun} where xww_name=#{xwwName}
+	</update>
 	<!-- 增加商品 -->
 	<insert id="addItem" parameterType="cn.edu.nuc.ssm.entity.Item">
 		insert into item (xww_name,xww_price,xww_kucun) values

@@ -37,7 +37,7 @@ public class AdminController {
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String index(){
 		
-		return "user/login";
+		return "login";
 	}
 	@RequestMapping(value="/admin",method=RequestMethod.GET)
 	public String admin(){
@@ -73,9 +73,13 @@ public class AdminController {
 	 */
 	@RequestMapping(value="add_item",method=RequestMethod.POST)
 	public String additem(Item item){
-		
+		Item it = adminservice.findEqual(item);
+		System.out.println(it);
+		if(it !=null){
+			adminservice.updateNum(item);
+		}else{
 		adminservice.addItem(item);
-		
+		}
 		return "redirect:findAll";		
 	}
 	@RequestMapping(value="sys_delete/{id}",method=RequestMethod.GET)

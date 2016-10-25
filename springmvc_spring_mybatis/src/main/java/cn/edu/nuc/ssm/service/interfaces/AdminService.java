@@ -3,6 +3,7 @@ package cn.edu.nuc.ssm.service.interfaces;
 import java.util.List;
 
 import cn.edu.nuc.ssm.entity.Admin;
+import cn.edu.nuc.ssm.entity.Cart;
 import cn.edu.nuc.ssm.entity.Item;
 
 public interface AdminService {
@@ -16,5 +17,13 @@ public interface AdminService {
 	void deleteItem(Integer id);
 
 	void edit(Item item);
+
+	Item findEqual(Item item);
+
+	
+	void updateNum(Item item);
+
+	
+
 
 }

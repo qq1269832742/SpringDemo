@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import cn.edu.nuc.ssm.dao.AdminMapper;
 import cn.edu.nuc.ssm.entity.Admin;
+import cn.edu.nuc.ssm.entity.Cart;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.service.interfaces.AdminService;
 @Service
@@ -61,6 +62,25 @@ public class AdminServiceImpl implements AdminService{
 		
 		adminMapper.edit(item);
 	}
+	/**
+	 * 查询有无次商品，判断
+	 */
+	@Override
+	public Item findEqual(Item item) {
+		Item it = adminMapper.findEqual(item);
+		return it;
+	}
+	/**
+	 * 如果有此商品，那么修改数量
+	 */
+	@Override
+	public void updateNum(Item item) {
+		
+		adminMapper.updateNum(item);
+		
+	}
+	
+	
 	
 
 }

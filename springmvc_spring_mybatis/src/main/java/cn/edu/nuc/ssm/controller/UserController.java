@@ -36,7 +36,7 @@ public class UserController {
 		
 		String msg="请重新登录";
 		model.addAttribute("msg", msg);
-		return "forward:WEB-INF/views/user/login.jsp";
+		return "forward:WEB-INF/views/login.jsp";
 	}
 	/**
 	 * 查询全部商品
@@ -81,8 +81,13 @@ public class UserController {
 		String msg;
 		cart.setUid(u.getId());
 		cart.setMid(item.getId());
+		Cart c = userService.findCartEqual(cart);
 		if(cart.getNums()>0 && cart.getNums() <= item.getXwwKucun()){
+			if( c!=null){
+				userService.updateNum(item);
+			}else{
 			userService.shop(cart);
+			}
 			return "forward:find_cart";	
 		}else{
 			msg="添加购物车失败，需要符合规范";
@@ -113,7 +118,8 @@ public class UserController {
 	public String itemFind(String text,Model model){
 		System.out.println("搜索名称"+text);
 		List<Cart> list = userService.itemFind(text);
-		model.addAttribute("list", list);		
+		model.addAttribute("list", list);	
+		model.addAttribute("text", text);
 		return "user/store";
 		
 	}
