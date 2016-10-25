@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +48,20 @@
 							<img class="header" src="/assets/image/${w.account.pic }" />
 							<h3><a>${w.account.nickName }</a></h3>
 							<span>
-								<a>48 分钟以前</a> 来自
+								<a>
+									<c:choose>
+										<c:when test="${((now.time - w.lastUpdateTime.time) / 1000) lt 60 }">
+											刚刚
+										</c:when>
+										<c:when test="${((now.time - w.lastUpdateTime.time) / 1000 / 60 ) lt 60 }">
+											<fmt:formatNumber value="${(now.time - w.lastUpdateTime.time) / 1000 / 60 }" maxFractionDigits="0" />
+											 分钟以前
+										</c:when>
+										<c:otherwise>
+											<fmt:formatDate value="${w.lastUpdateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+										</c:otherwise>
+									</c:choose>
+								</a> 来自
 								<a>${w.service }</a>
 							</span>
 							<p>${w.wcontent }</p>
@@ -163,7 +177,7 @@
 						<h3><a>${account.nickName }</a></h3>
 						<ul class="clearfix">
 							<li>
-								<a href="">
+								<a href="/u/follow">
 								<strong>${account.follow }</strong>
 								<span>关注</span>
 								</a>

@@ -19,6 +19,18 @@
 	<context:component-scan base-package="cn.edu.nuc.weibo.controller">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
+	
+	<mvc:interceptors>
+	
+		<mvc:interceptor>
+			
+			<mvc:mapping path="/u/**"/>
+			
+			<bean class="cn.edu.nuc.weibo.interceptor.AuthInterceptor"></bean>
+		
+		</mvc:interceptor>
+	
+	</mvc:interceptors>
 
 
 	<!-- 视图解析器 -->

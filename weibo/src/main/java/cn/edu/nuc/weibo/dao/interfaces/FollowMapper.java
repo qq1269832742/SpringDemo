@@ -1,5 +1,7 @@
 package cn.edu.nuc.weibo.dao.interfaces;
 
+import java.util.List;
+
 import cn.edu.nuc.weibo.entity.Follow;
 
 public interface FollowMapper {
@@ -10,6 +12,8 @@ public interface FollowMapper {
     int insertSelective(Follow record);
 
     Follow selectByPrimaryKey(Integer fid);
+    
+    List<cn.edu.nuc.weibo.dto.Follow> follow(Integer aid);
 
     int updateByPrimaryKeySelective(Follow record);
 

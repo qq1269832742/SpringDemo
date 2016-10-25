@@ -17,6 +17,50 @@
     from follow
     where fid = #{fid,jdbcType=INTEGER}
   </select>
+  <select id="follow" parameterType="int" resultType="cn.edu.nuc.weibo.dto.Follow">
+  	SELECT
+		a.fid,
+		a.aid 'account.aid',
+		a.follow_aid,
+		a.nick_name 'account.nickName',
+		a.pic 'account.pic',
+		a.fans 'account.fans',
+		a.follow 'account.follow',
+		a.weibo 'account.weibo', 
+		ifnull(b.aid, - 1) flag
+	FROM
+		(
+			SELECT
+				f.fid,
+				f.aid,
+				f.follow_aid,
+				a.nick_name,
+				a.pic,
+				a.fans,
+				a.follow,
+				a.weibo
+			FROM
+				follow f
+			LEFT JOIN account a ON f.follow_aid = a.aid
+			WHERE
+				f.aid = #{value}
+			ORDER BY
+				f.ftime DESC
+		) a
+	LEFT JOIN (
+		SELECT
+			f.fid,
+			f.follow_aid,
+			a.nick_name,
+			a.aid
+		FROM
+			follow f
+		LEFT JOIN account a ON f.aid = a.aid
+		WHERE
+			f.follow_aid = #{value}
+	) b ON a.follow_aid = b.aid
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from follow
     where fid = #{fid,jdbcType=INTEGER}
