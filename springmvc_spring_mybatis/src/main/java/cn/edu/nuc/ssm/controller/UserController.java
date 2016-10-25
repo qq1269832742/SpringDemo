@@ -110,7 +110,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="/item_find",method=RequestMethod.POST)
-	public String itemFind(@RequestParam(name="text",defaultValue="") String text,Model model){
+	public String itemFind(String text,Model model){
 		System.out.println("搜索名称"+text);
 		List<Cart> list = userService.itemFind(text);
 		model.addAttribute("list", list);		

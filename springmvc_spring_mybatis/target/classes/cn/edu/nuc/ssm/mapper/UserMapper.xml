@@ -52,4 +52,11 @@
 	    WHERE c.uid=#{id}
 	    AND c.mid=m.id ;
 	</select>
+	<!-- 搜索商品名称 -->
+	<select id="itemFind" parameterType="java.lang.String" resultType="Item">
+		SELECT * from item 
+		<if test="text != '' ">
+		where id=#{text} or xww_name=#{text}
+		</if> 		
+	</select>
 </mapper>

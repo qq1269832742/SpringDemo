@@ -55,9 +55,8 @@
 	<!-- 搜索商品名称 -->
 	<select id="itemFind" parameterType="java.lang.String" resultType="Item">
 		SELECT * from item 
-		<if test="text!=null">
-		where id=#{text} or xwwName=#{text}
-		</if>
-		
+		<if test="text != '' ">
+		where id=#{text} or xww_name=#{text}
+		</if> 		
 	</select>
 </mapper>
