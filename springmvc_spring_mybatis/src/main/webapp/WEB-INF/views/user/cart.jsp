@@ -6,8 +6,9 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,8 +22,27 @@
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+function selectAll(){
+	 var checklist = document.getElementsByName ("selected");
+	   if(document.getElementById("controlAll").checked)
+	   {
+	   for(var i=0;i<checklist.length;i++)
+	   {
+	      checklist[i].checked = 1;
+	   }
+	 }else{
+	  for(var j=0;j<checklist.length;j++)
+	  {
+	     checklist[j].checked = 0;
+	  }
+	 }
+	}
+	
+</script>
 </head>
 <body>
+<form action="<%=basePath %>x" method="post">
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -48,7 +68,10 @@
 							总价
 						</th>
 						<th>
-							是否结算
+							<input onclick="selectAll()" type="checkbox"   name="controlAll" style="controlAll" id="controlAll" />全选<br>
+						</th>
+						<th>
+							是否删除
 						</th>
 					</tr>
 				</thead>
@@ -62,23 +85,32 @@
 							${cart.item.xwwPrice}
 						</td>
 					 	<td>
-							${cart.nums}
+							
+							<input type="number" min="1" max="${cart.nums}" value="${cart.nums}" >
 						</td> 
 						<td>
 							${cart.nums*cart.item.xwwPrice}
 						</td> 
 						
-						<td>							
-							<a href="#">结算</a>
+						<td>						
+							<input type="checkbox" name="selected" value="N" />结算
 						</td>
+						<td>							
+							<a href="<%=basePath %>cart_delete?id=${cart.id}">删除</a>
+							<input type="hidden" name="id " value="${cart.id}">
+						</td>
+						
 					</tr>
 				</c:forEach>									
 				</tbody>
 				
 			</table>
-			 <center><a href="<%=basePath %>" class="btn btn-primary btn-large" >全部结算</a></center>
+			
+		
 		</div>
 	</div>
 </div>
+ <center> <button class="btn btn-info" type="submit">按钮</button></center>
+</form>
 </body>
 </html>

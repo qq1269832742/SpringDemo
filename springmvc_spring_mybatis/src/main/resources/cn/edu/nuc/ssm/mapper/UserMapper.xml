@@ -7,8 +7,8 @@
 		<id column="total" jdbcType="VARCHAR" property="total" />
 	</resultMap>
 	<resultMap id="cart" type="cn.edu.nuc.ssm.entity.Cart">
+		<result column="id" property="id"/>
   		<result column="nums" property="nums"/>
-  			<result column="nums" property="nums"/>
   		<association property="item" javaType="Item">
   			<result column="xww_name" property="xwwName"/>
   			<result column="xww_price" property="xwwPrice"/>   						
@@ -21,31 +21,33 @@
 	<select id="login" parameterType="cn.edu.nuc.ssm.entity.User"
 		resultMap="BaseResultMap">
 		select
-		*
+		<include refid="Base_Column_List" />
 		from xww_user
 		where username=#{username} and password=#{password}
 	</select>
 	<select id="findAll" resultType="cn.edu.nuc.ssm.entity.Item">
 		select
-		*
+		<include refid="Base_Column_List" />
 		from item
 	</select>
 	<!-- 查询购物车中是否有相同商品-->
-	<select id="findItemEqual" parameterType="cn.edu.nuc.ssm.entity.Cart">
+	<select id="finCartEqual" parameterType="cn.edu.nuc.ssm.entity.Citem" resultMap="cart">
+		
 		SELECT 
 	    DISTINCT 
+	    c.id,
 		m.xww_name,
 		m.xww_price,
 		c.nums 
 		FROM xww_cart c,
-		item m ,
+		item m,
 		xww_user u
-	    WHERE c.uid=#{id}
-	    AND c.mid=m.id and m.xww_name=#{xwwName} and m.xww_price=#{xwwPrice};
+	    WHERE c.uid=#{cart.uid}
+	    AND c.mid=m.id and m.xww_name=#{item.xwwName} and m.xww_price=#{item.xwwPrice}
 	</select>
 	<!-- 有相同商品,修改数量 -->
 	<insert id="updateNum" parameterType="cn.edu.nuc.ssm.entity.Cart" >
-		
+		update xww_cart  c SET  c.nums=c.nums+#{nums} where c.uid=#{uid} AND c.mid=#{mid}; 
 	</insert>
 	<!-- 加入购物车,试试使用存储过程 ,应该行不通-->
 	<insert id="shop" parameterType="cn.edu.nuc.ssm.entity.Cart" flushCache="true" timeout="30000"  >
@@ -54,12 +56,13 @@
 	
 	</insert>
 	
-		<!-- 查询结果重复 -->
+		<!-- 查询结果重复,查询购物车 -->
 	<select id="findCart" parameterType="java.lang.Integer" resultMap="cart">
 		
 	
 		SELECT 
 	    DISTINCT 
+	    c.id,
 		m.xww_name,
 		m.xww_price,
 		c.nums 
@@ -67,13 +70,17 @@
 		item m ,
 		xww_user u
 	    WHERE c.uid=#{id}
-	    AND c.mid=m.id ;
+	    AND c.mid=m.id order by c.nums 	
 	</select>
 	<!-- 搜索商品名称 -->
 	<select id="itemFind" parameterType="java.lang.String" resultType="Item">
 		SELECT * from item 
 		<if test="text != '' ">
-		where id=#{text} or xww_name=#{text}
+		where id=#{text} or xww_name=#{text} order by xww_kucun
 		</if> 		
 	</select>
+	<!-- 购物车商品删除 -->
+	<delete id="userMapper" parameterType="cn.edu.nuc.ssm.entity.Cart">
+		DELETE FROM xww_cart WHERE id = #{id}
+	</delete>
 </mapper>

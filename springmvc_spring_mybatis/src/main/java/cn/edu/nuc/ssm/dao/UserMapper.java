@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.edu.nuc.ssm.entity.Cart;
+import cn.edu.nuc.ssm.entity.Citem;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.entity.User;
 
@@ -23,12 +24,14 @@ public interface UserMapper {
 	List<Cart> itemFind(@Param("text") String text);
 
 
-	void updateNum(Item item);
+	void updateNum(Cart cart);
 
 
 	Cart findEqualItem(Cart cart);
 
+	Cart finCartEqual(Citem ci);
 
-	Cart findCartEqual(Cart cart);
+
+	void userMapper(Cart cart);
 
 }

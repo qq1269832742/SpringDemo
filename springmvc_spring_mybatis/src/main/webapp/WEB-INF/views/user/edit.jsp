@@ -53,7 +53,7 @@
 					<div class="controls">
 						<label class="control-label" for="inputPassword">购买数量</label>
 							
-						<input type="number"  min="0" max="${item.xwwKucun}" name="nums" />
+						<input type="number"  min="1" max="${item.xwwKucun}" name="nums" />
 					</div>
 				</div>
 				<input type="hidden" name="xwwKucun" value="${item.xwwKucun}">

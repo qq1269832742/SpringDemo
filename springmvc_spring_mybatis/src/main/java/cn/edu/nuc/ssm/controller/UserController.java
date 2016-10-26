@@ -1,5 +1,6 @@
 package cn.edu.nuc.ssm.controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
+
 import cn.edu.nuc.ssm.entity.Cart;
+import cn.edu.nuc.ssm.entity.Citem;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.entity.User;
 import cn.edu.nuc.ssm.service.interfaces.AdminService;
@@ -24,13 +28,14 @@ public class UserController {
 	@Autowired
 	private  AdminService adminservice;
 	
-	@RequestMapping(value="/user_login",method=RequestMethod.POST)
+	@RequestMapping(value="/user_login")
 	public String userlogin(User user,HttpSession session,Model model){
 		try {
 			User  u = userService.login(user);
 			session.setAttribute("user", u);	
-			return "forward:store";
+			return "redirect:store";
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 		
@@ -50,7 +55,7 @@ public class UserController {
 		
 		model.addAttribute("list", list);
 	
-		return "user/store";
+		return "store";
 	}
 	/**
 	 * 跳转商品编辑界面
@@ -59,11 +64,14 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="/to_shop")
-	public String editItem( Item item,Model model){
+	public String editItem( Item item,Model model,HttpSession session){
+		if(session.getAttribute("user")!=null){
+			model.addAttribute("item",item);
+			return "user/edit";	
+		}else{
+			return "login";
+		}
 		
-		model.addAttribute("item",item);
-		
-		return "user/edit";	
 	}
 	/**
 	 * 添加至购物车
@@ -76,19 +84,18 @@ public class UserController {
 	@RequestMapping(value="/user_shop")
 	public String shop( Item item,Cart cart,Model model,HttpSession session){
 		User u = (User) session.getAttribute("user");
-		System.out.println("库存"+item.getXwwKucun());
-		System.out.println("购买数量"+cart.getNums());
 		String msg;
 		cart.setUid(u.getId());
 		cart.setMid(item.getId());
-		Cart c = userService.findCartEqual(cart);
-		if(cart.getNums()>0 && cart.getNums() <= item.getXwwKucun()){
+		Citem ci = new Citem(cart,item);
+		Cart c = userService.findCartEqual(ci);
+		if(cart.getNums()>0 && cart.getNums() <= item.getXwwKucun() &&!cart.getNums().equals("")&&item.getXwwName()!=null){
 			if( c!=null){
-				userService.updateNum(item);
+				userService.updateNum(cart);
 			}else{
-			userService.shop(cart);
+				userService.shop(cart);
 			}
-			return "forward:find_cart";	
+			return "redirect:find_cart";	
 		}else{
 			msg="添加购物车失败，需要符合规范";
 			model.addAttribute("error", msg);
@@ -116,13 +123,45 @@ public class UserController {
 	 */
 	@RequestMapping(value="/item_find",method=RequestMethod.POST)
 	public String itemFind(String text,Model model){
-		System.out.println("搜索名称"+text);
+	
 		List<Cart> list = userService.itemFind(text);
 		model.addAttribute("list", list);	
 		model.addAttribute("text", text);
-		return "user/store";
+		return "store";
 		
 	}
-	
-	
+	/**
+	 * 购物车删除商品
+	 */
+	@RequestMapping(value="/cart_delete")
+	public String deleteItem(Cart cart ){
+		
+		userService.deleteItem(cart);
+		
+		return "forward:find_cart";
+	}
+	/**
+	 * 登录
+	 */
+	@RequestMapping(value="/need_login")
+	public String needLogin(){
+		
+		return "login";
+	}
+	@RequestMapping(value="/x")
+	public String jieSuan(Cart[] cart,Model model){
+			System.out.println("xww");
+		for (int i = 0; i < cart.length; i++) {
+				Item item =userService.findStoreNums(cart[i]);
+				/*System.out.println(cart[i]);*/
+				if(item.getXwwKucun()>=cart[i].getNums()){
+					userService.jieSuan(cart[i]);
+					
+				}else{
+					return "";
+				}
+			
+			}
+		return "store";
+	}
 }

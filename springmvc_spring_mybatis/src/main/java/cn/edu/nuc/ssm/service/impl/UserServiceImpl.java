@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import cn.edu.nuc.ssm.dao.UserMapper;
 import cn.edu.nuc.ssm.entity.Admin;
 import cn.edu.nuc.ssm.entity.Cart;
+import cn.edu.nuc.ssm.entity.Citem;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.entity.User;
 import cn.edu.nuc.ssm.service.interfaces.UserService;
@@ -58,25 +59,45 @@ public class UserServiceImpl implements UserService{
 		return list;
 	}
 	/**
-	 * 购物车中有名称和价格相同的商品
+	 * 购物车中有名称和价格相同的商品,修改数量
 	 */
 	@Override
-	public void updateNum(Item item) {
-		
-		userMapper.updateNum(item);
+	public void updateNum(Cart cart) {
+			
+		userMapper.updateNum(cart);
 		
 	}
 	/**
 	 *  查询购物车中有名称和价格相同的商品
 	 */
-	
-	
 	@Override
-	public Cart findCartEqual(Cart cart) {
-		// TODO Auto-generated method stub
-		Cart c = userMapper.findCartEqual(cart);
+	public Cart findCartEqual(Citem ci) {
+
+		Cart c =userMapper.finCartEqual(ci);
 		return c;
 	}
-
+	/**
+	 * 删除商品
+	 */
+	@Override
+	public void deleteItem(Cart cart) {
+		
+		userMapper.userMapper(cart);
+	}
+	
+	/**
+	 * 结算
+	 */
+	public void jieSuan(Cart cart) {
+		
+		
+						
+	}
+	@Override
+	public Item findStoreNums(Cart cart) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }

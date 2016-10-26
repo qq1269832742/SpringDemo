@@ -37,7 +37,7 @@ public class AdminController {
 	@RequestMapping(value="/",method=RequestMethod.GET)
 	public String index(){
 		
-		return "login";
+		return "forward:store";
 	}
 	@RequestMapping(value="/admin",method=RequestMethod.GET)
 	public String admin(){

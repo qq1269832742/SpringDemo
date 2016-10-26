@@ -3,6 +3,7 @@ package cn.edu.nuc.ssm.service.interfaces;
 import java.util.List;
 
 import cn.edu.nuc.ssm.entity.Cart;
+import cn.edu.nuc.ssm.entity.Citem;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.entity.User;
 
@@ -24,10 +25,19 @@ public interface UserService {
 	List<Cart> itemFind(String text);
 
 
-	void updateNum(Item item);
+	void updateNum(Cart cart);
 	
 
-	Cart findCartEqual(Cart cart);
+	Cart findCartEqual(Citem ci);
+
+
+	void deleteItem(Cart cart);
+
+
+	void jieSuan(Cart cart);
+
+
+	Item findStoreNums(Cart cart);
 
 	
 	

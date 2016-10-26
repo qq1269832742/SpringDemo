@@ -13,6 +13,7 @@ public class User {
 	 * 密码
 	 */
 	private String password;
+
 	public Integer getId() {
 		return id;
 	}
