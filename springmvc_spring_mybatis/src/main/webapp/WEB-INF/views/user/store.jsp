@@ -26,23 +26,11 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
-			<h4><c:if test="${user != null}">
-				<d style="color:#798999">${user.username}用户在线</d> 
-				<a href="<%=basePath%>reg">注册</a>
-				<a href="<%=basePath%>login_out">注销</a>
-			</c:if>
-				<c:if test="${user == null}">
-				<a style="color:red" href="<%=basePath%>need_login">请登录</a>
-				<a href="<%=basePath%>reg">注册</a>
-			</c:if>
-			</h4>
-			
-			<h3>
-				<center>这是一个商城界面</center>
-				
+		<h3>
+				这是一个商城界面
 			</h3>			
 		<form class="form-search"  action="<%=basePath%>item_find" method="post">
-				<input class="input-medium search-query" type="text" name="text" value="${text}" maxlength="16" />
+				<input class="input-medium search-query" type="text" name="text" value="${text}" />
 				 <button type="submit" class="btn">查找</button>
 			</form>
 			<table class="table">
@@ -83,7 +71,7 @@
 						<td>						
 							<c:choose>
 								<c:when test="${item.xwwKucun gt 0}">
-								<a href="to_shop?id=${item.id}">确定加入</a>
+								<a href="to_shop?id=${item.id}&xwwName=${item.xwwName}&xwwPrice=${item.xwwPrice}&xwwKucun=${item.xwwKucun}">确定加入</a>
 								</c:when>
 								<c:when test="${item.xwwKucun == 0}">
 									<b style="color:blue">已售完</b>

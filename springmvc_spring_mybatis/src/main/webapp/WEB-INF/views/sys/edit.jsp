@@ -31,7 +31,7 @@
 			</div>
 <form class="form-horizontal" method="post" action="<%=basePath%>sys_edit">
 				<input type="hidden" name="id" value="${item.id}">
-			------>	${item.id}
+		
 				<div class="control-group">					 
 					<div class="controls">
 						<label class="control-label" for="inputEmail">商品名称</label><input name="xwwName" id="inputEmail" type="text" value="${item.xwwName}" />
@@ -46,7 +46,7 @@
 				<div class="control-group">
 					 
 					<div class="controls">
-					<label class="control-label" for="inputPassword">商品库存</label>	<input id="inputPassword" name="xwwKun" value="${item.xwwKucun}"/>
+					<label class="control-label" for="inputPassword">商品库存</label>	<input id="inputPassword" name="xwwKucun" value="${item.xwwKucun}"/>
 					</div>
 				</div>
 				<div class="control-group">

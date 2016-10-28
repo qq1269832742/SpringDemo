@@ -83,4 +83,36 @@
 	<delete id="userMapper" parameterType="cn.edu.nuc.ssm.entity.Cart">
 		DELETE FROM xww_cart WHERE id = #{id}
 	</delete>
+
+	<!-- 查找商品Id -->
+	
+	<select id="findShangpin" parameterType="java.lang.Integer" resultType="Item">
+		
+		select * from item where id=#{itemid}
+	</select>
+	<!-- 查找物品iD -->
+	<select id="findCarts" parameterType="java.lang.Integer" resultType="Cart">
+		select * from xww_cart where id=#{cartid}
+	</select>
+	<!-- 删除选中的 -->
+	<delete id="dealCart" parameterType="java.lang.Integer">
+		delete from xww_cart where id=#{cartid}
+	</delete>
+	<!-- 修改库存数量 -->
+	<update id="dealItem" parameterType="cn.edu.nuc.ssm.entity.Cart">
+		update  item set xww_kucun=xww_kucun-#{nums}   where id=#{mid}
+	</update>
+	<!-- 根据id修改购物车 nums-->
+	<update id="setNumsById" parameterType="cn.edu.nuc.ssm.entity.Cart">
+		update xww_cart set nums=#{nums} where id=#{id}
+	</update>
+	<!-- 查询用户名是否存在 -->
+	<select id="selectByName" parameterType="java.lang.String" resultType="cn.edu.nuc.ssm.entity.User">
+		select username,password from xww_user where username=#{username}
+	</select>
+	<!-- 注册 -->
+	<insert id="insertUser" parameterType="cn.edu.nuc.ssm.entity.User" >
+		insert into xww_user (username,password) values (#{username},#{password})
+	</insert>
+	
 </mapper>

@@ -39,10 +39,10 @@ function selectAll(){
 	 }
 	}
 	
+	
 </script>
 </head>
 <body>
-<form action="<%=basePath %>x" method="post">
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="span12">
@@ -85,19 +85,18 @@ function selectAll(){
 							${cart.item.xwwPrice}
 						</td>
 					 	<td>
+							<input type="number" value="${cart.nums}" min="1" name="nums" onchange="setnums(${cart.id})" required />
 							
-							<input type="number" min="1" max="${cart.nums}" value="${cart.nums}" >
 						</td> 
 						<td>
 							${cart.nums*cart.item.xwwPrice}
 						</td> 
 						
 						<td>						
-							<input type="checkbox" name="selected" value="N" />结算
+							<input type="checkbox" name="selected" value="${cart.id}" />结算
 						</td>
 						<td>							
-							<a href="<%=basePath %>cart_delete?id=${cart.id}">删除</a>
-							<input type="hidden" name="id " value="${cart.id}">
+							<a href="<%=basePath %>cart_delete?id=${cart.id}">删除</a>						
 						</td>
 						
 					</tr>
@@ -110,7 +109,40 @@ function selectAll(){
 		</div>
 	</div>
 </div>
- <center> <button class="btn btn-info" type="submit">按钮</button></center>
-</form>
+<script type="text/javascript">
+	var getall=function(){
+	var checkboxs = document.getElementsByName("selected");
+	var totalmoney=0;
+	var s=0;
+	var orderids=[];
+	for(var i=0;i<checkboxs.length;i++){
+		if(checkboxs[i].checked){
+			orderids[s++]=checkboxs[i].value;
+		}
+	}
+	
+	
+	$.post("/springmvc_spring_mybatis/sss","orderids="+orderids,function(data){		
+			
+			alert(data.msg);
+		
+		window.location.reload();
+	},"json")
+};
+	
+	var setnums = function(a){
+		var b = $("[name='nums']").val();
+		
+		$.post("/springmvc_spring_mybatis/setNums",{'id':a,'nums':b},function(data){					
+			alert(data.msg);		
+			window.location.href('/springmvc_spring_mybatis/find_cart');
+			
+		},"json")
+	}
+	
+	</script>
+	
+ <center> <button class="btn btn-info" type="button" onclick="getall()"> 结账</button></center>
+
 </body>
 </html>

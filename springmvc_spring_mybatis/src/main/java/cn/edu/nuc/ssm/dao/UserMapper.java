@@ -33,5 +33,25 @@ public interface UserMapper {
 
 
 	void userMapper(Cart cart);
+	
+	Item findShangpin(@Param("itemid") Integer itemid);
+
+
+	Cart findCarts(@Param("cartid")  Integer cartid);
+
+
+	void dealCart(@Param("cartid") Integer cartid);
+
+
+	void dealItem( Cart cart);
+
+
+	int setNumsById(Cart cart);
+
+
+	User selectByName(String username);
+
+
+	void insertUser(User user);
 
 }

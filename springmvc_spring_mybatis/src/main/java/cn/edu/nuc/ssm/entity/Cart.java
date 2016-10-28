@@ -27,18 +27,7 @@ public class Cart {
 	 * @return
 	 */
 	private Item item;
-	/**
-	 * 判断是否选
-	 * @return
-	 */
-	private String[] selected;
-	
-	public String[] getSelected() {
-		return selected;
-	}
-	public void setSelected(String[] selected) {
-		this.selected = selected;
-	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -69,11 +58,7 @@ public class Cart {
 	public void setItem(Item item) {
 		this.item = item;
 	}
-	@Override
-	public String toString() {
-		return "Cart [id=" + id + ", uid=" + uid + ", mid=" + mid + ", nums=" + nums + ", item=" + item + ", selected="
-				+ Arrays.toString(selected) + "]";
-	}
+	
 	
 	
 	

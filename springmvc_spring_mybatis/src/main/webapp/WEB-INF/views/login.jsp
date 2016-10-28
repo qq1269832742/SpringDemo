@@ -41,7 +41,7 @@
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						 <label class="checkbox">${msg}</label> <button type="submit" class="btn">登陆</button>
+						 <label class="checkbox">${msg}</label> <button type="submit" class="btn">登陆</button>						 
 					</div>
 				</div>
 				</center> 	

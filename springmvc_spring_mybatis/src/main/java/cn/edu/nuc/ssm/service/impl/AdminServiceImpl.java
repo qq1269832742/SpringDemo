@@ -50,7 +50,14 @@ public class AdminServiceImpl implements AdminService{
 	 * 删除模块
 	 */
 	public void deleteItem(Integer id) {
-	
+		
+		List<Cart> list = adminMapper.findUserContain(id);
+		if(list.size()>0){
+			for (int i = 0; i < list.size(); i++) {
+				adminMapper.deleteItemByMid(list.get(i).getMid());
+			}
+			
+		}
 		adminMapper.deleteItem(id);
 	
 	}

@@ -15,11 +15,21 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import cn.edu.nuc.ssm.entity.Admin;
 import cn.edu.nuc.ssm.entity.Item;
 import cn.edu.nuc.ssm.service.interfaces.AdminService;
+import cn.edu.nuc.ssm.service.interfaces.UserService;
 @Controller
 public class AdminController {
 	@Autowired
 	private  AdminService adminservice;
-	@RequestMapping(value="/sys_login",method=RequestMethod.POST)
+	@Autowired
+	private UserService userService;
+	/**
+	 * 管理员登录
+	 * @param admin
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sys_login")
 	public String syslogin(Admin admin,HttpSession session,Model model){
 		try {
 			Admin  ad = adminservice.login(admin);
@@ -34,12 +44,12 @@ public class AdminController {
 		model.addAttribute("msg", msg);
 		return "forward:WEB-INF/views/index.jsp";
 	}
-	@RequestMapping(value="/",method=RequestMethod.GET)
+	@RequestMapping(value="/")
 	public String index(){
 		
 		return "forward:store";
 	}
-	@RequestMapping(value="/admin",method=RequestMethod.GET)
+	@RequestMapping(value="/admin")
 	public String admin(){
 		
 		return "index";
@@ -50,23 +60,31 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value="/findAll",method={RequestMethod.POST,RequestMethod.GET})
-	public String findAll(Model model){
+	public String findAll(Model model,HttpSession session){
+		if(session.getAttribute("admin")!=null){
+			List<Item> list = adminservice.findAll();
+			
+			model.addAttribute("list", list);
+			return "sys/item";
+		}else{
+			return "index";
+		}
+			
 		
-		List<Item> list = adminservice.findAll();
-		
-		model.addAttribute("list", list);
-		return "sys/item";
 	}
 	/**
 	 * 跳转增加新商品
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/sys_add",method=RequestMethod.GET)
-	public String toAdd(Model model){
+	@RequestMapping(value="/sys_add")
+	public String toAdd(Model model,HttpSession session){
 		
-		
+		if(session.getAttribute("admin")!=null){
 		return "sys/add";
+		}else{
+			return "index";
+		}
 	}
 	/**
 	 * 增加商品模块
@@ -82,7 +100,7 @@ public class AdminController {
 		}
 		return "redirect:findAll";		
 	}
-	@RequestMapping(value="sys_delete/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="sys_delete/{id}")
 	public String deleteItem(@PathVariable Integer id){
 		
 		adminservice.deleteItem(id);
@@ -95,10 +113,11 @@ public class AdminController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="to_edit",method=RequestMethod.GET)
+	@RequestMapping(value="to_edit")
 	public String editItem( Item item,Model model){
 		System.out.println(item.toString());
-		model.addAttribute("item",item);
+		Item it = userService.findShangpin(item.getId());
+		model.addAttribute("item",it);
 		
 		return "sys/edit";	
 	}
@@ -107,11 +126,23 @@ public class AdminController {
 	 * @param item
 	 * @return
 	 */
-	@RequestMapping(value="/sys_edit",method=RequestMethod.POST)
+	@RequestMapping(value="/sys_edit")
 	public String edit(Item item){
 		
 		adminservice.edit(item);
 		
 		return "redirect:/findAll";	
+	}
+	/**
+	 * 注销
+	 */
+	@RequestMapping(value="/sys_login_out")
+	public String login_out(HttpSession session){
+		
+		 
+		session.removeAttribute("user");
+		
+		return "redirect:/admin";
+		
 	}
 }

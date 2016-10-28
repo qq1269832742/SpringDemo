@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.annotation.JsonFormat.Value;
 
 import cn.edu.nuc.ssm.entity.Cart;
 import cn.edu.nuc.ssm.entity.Citem;
 import cn.edu.nuc.ssm.entity.Item;
+import cn.edu.nuc.ssm.entity.Msg;
 import cn.edu.nuc.ssm.entity.User;
 import cn.edu.nuc.ssm.service.interfaces.AdminService;
 import cn.edu.nuc.ssm.service.interfaces.UserService;
@@ -41,7 +43,7 @@ public class UserController {
 		
 		String msg="请重新登录";
 		model.addAttribute("msg", msg);
-		return "forward:WEB-INF/views/login.jsp";
+		return "redirect:WEB-INF/views/login.jsp";
 	}
 	/**
 	 * 查询全部商品
@@ -65,8 +67,9 @@ public class UserController {
 	 */
 	@RequestMapping(value="/to_shop")
 	public String editItem( Item item,Model model,HttpSession session){
+		Item it = userService.findShangpin(item.getId());
 		if(session.getAttribute("user")!=null){
-			model.addAttribute("item",item);
+			model.addAttribute("item",it);
 			return "user/edit";	
 		}else{
 			return "login";
@@ -83,25 +86,10 @@ public class UserController {
 	 */
 	@RequestMapping(value="/user_shop")
 	public String shop( Item item,Cart cart,Model model,HttpSession session){
-		User u = (User) session.getAttribute("user");
-		String msg;
-		cart.setUid(u.getId());
-		cart.setMid(item.getId());
-		Citem ci = new Citem(cart,item);
-		Cart c = userService.findCartEqual(ci);
-		if(cart.getNums()>0 && cart.getNums() <= item.getXwwKucun() &&!cart.getNums().equals("")&&item.getXwwName()!=null){
-			if( c!=null){
-				userService.updateNum(cart);
-			}else{
-				userService.shop(cart);
-			}
-			return "redirect:find_cart";	
-		}else{
-			msg="添加购物车失败，需要符合规范";
-			model.addAttribute("error", msg);
-			return "forward:WEB-INF/views/user/edit.jsp";
-		}
 		
+		String msg = userService.addCarts(item,cart,model,session);
+		
+		return msg;
 	}
 	/**
 	 * 查询购物车
@@ -121,7 +109,7 @@ public class UserController {
 	 * 查询商品
 	 * @return
 	 */
-	@RequestMapping(value="/item_find",method=RequestMethod.POST)
+	@RequestMapping(value="/item_find")
 	public String itemFind(String text,Model model){
 	
 		List<Cart> list = userService.itemFind(text);
@@ -138,7 +126,7 @@ public class UserController {
 		
 		userService.deleteItem(cart);
 		
-		return "forward:find_cart";
+		return "redirect:find_cart";
 	}
 	/**
 	 * 登录
@@ -148,20 +136,69 @@ public class UserController {
 		
 		return "login";
 	}
-	@RequestMapping(value="/x")
-	public String jieSuan(Cart[] cart,Model model){
-			System.out.println("xww");
-		for (int i = 0; i < cart.length; i++) {
-				Item item =userService.findStoreNums(cart[i]);
-				/*System.out.println(cart[i]);*/
-				if(item.getXwwKucun()>=cart[i].getNums()){
-					userService.jieSuan(cart[i]);
-					
-				}else{
-					return "";
-				}
-			
-			}
-		return "store";
+	/**
+	 * 结算
+	 * @param orderids
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/sss")
+	public  @ResponseBody Msg jieSuan( Integer[] orderids){
+		
+		Msg msg = userService.jieSuan(orderids);
+				
+		return msg;
+	}
+	@RequestMapping(value="/setNums")
+	
+	public @ResponseBody Msg setNums(Cart cart,Model model){
+		System.out.println(cart.getId()+"--"+cart.getNums());
+		Msg msg = userService.setNumsById(cart);
+		
+		return msg;
+						
+	}
+	/**
+	 * 注销
+	 */
+	@RequestMapping(value="/login_out")
+	public String login_out(HttpSession session){
+		
+		 
+		session.removeAttribute("user");
+		
+		return "redirect:store";
+		
+	}
+	/**
+	 * 跳转注册
+	 * @return
+	 */
+	@RequestMapping(value="/reg")
+	public String to_reg(){
+		
+		return "reg";
+		
+	}
+	/**
+	 * 注册
+	 * @return
+	 */
+	@RequestMapping(value="/reg_user")
+	public @ResponseBody Msg  reg(User user){
+		System.out.println(user.getUsername());
+		Msg msg = userService.selectByName(user.getUsername());
+		
+		return msg;
+		
+	}
+	@RequestMapping(value="/reg_insert")
+	
+	public String inserUser(User user,Model model){
+		System.out.println("----"+user.getUsername());
+		Msg msg = userService.selectByName(user.getUsername());
+		userService.insertUser(user);
+		return "login";
+										
 	}
 }

@@ -25,6 +25,10 @@ public interface AdminMapper {
 
 	Item findItemEqual(Item item);
 
+	List findUserContain(Integer id);
+
+	void deleteItemByMid(Integer mid);
+
 
 
 }
